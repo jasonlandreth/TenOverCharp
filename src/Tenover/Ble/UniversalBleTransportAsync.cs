@@ -29,7 +29,7 @@ namespace Tenover.Ble;
 /// underlying picker/pairing UI and SynchronizationContext continuations need,
 /// which deadlocks.
 /// </summary>
-public sealed class UniversalBleTransportAsync : IBleTransport
+internal sealed class UniversalBleTransportAsync : IBleTransport
 {
     /// <summary>UUID of the notify/register-write characteristic (6A4E2810).</summary>
     private static readonly Guid Char2810Uuid = new("6a4e2810-667b-11e3-949a-0800200c9a66");
@@ -101,6 +101,21 @@ public sealed class UniversalBleTransportAsync : IBleTransport
     public static Task<UniversalBleTransportAsync> AutoConnectAsync(CancellationToken ct = default)
     {
         return ConnectWithSettingsFallbackAsync(ct);
+    }
+
+    /// <summary>
+    /// Connects using ONLY Option 2 (paired-devices lookup), bypassing the
+    /// scan/settings-fallback flow entirely. Useful for testing that
+    /// specific path in isolation — fails immediately if the device has
+    /// never been paired to Windows, rather than opening Settings for you.
+    /// Safe to await directly from a WinForms UI event handler.
+    /// </summary>
+    /// <param name="ct">A token to cancel the operation.</param>
+    /// <returns>A task that resolves to a connected <see cref="UniversalBleTransportAsync"/>.</returns>
+    /// <exception cref="InvalidOperationException">The device is not found among Windows's already-paired devices.</exception>
+    public static Task<UniversalBleTransportAsync> ConnectPairedOnlyAsync(CancellationToken ct = default)
+    {
+        return ConnectViaPairedDeviceAsync(ct);
     }
 
     /// <summary>

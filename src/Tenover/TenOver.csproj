@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.27.3" />
     <PackageReference Include="Grpc.Tools" Version="2.66.0" PrivateAssets="All" />
+    <PackageReference Include="InTheHand.BluetoothLE" Version="4.0.44" />
   </ItemGroup>
 
   <!-- Proto files — all three are in the same folder so imports resolve without extra flags -->

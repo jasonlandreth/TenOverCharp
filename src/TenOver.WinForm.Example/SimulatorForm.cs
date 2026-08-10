@@ -10,8 +10,7 @@ namespace TenOver.WinForm.Example
     public partial class SimulatorForm : Form
     {
         // 1. Declare as a Nullable Struct to represent "no shot present yet"
-        private .SimulationResult
-            ? _currentShot = null;
+        private SimulationResult ? _currentShot = null;
 
         private int _frameIndex = 0;
         private bool _isAnimating = false; 

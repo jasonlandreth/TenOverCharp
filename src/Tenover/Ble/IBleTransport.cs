@@ -17,8 +17,13 @@ namespace Tenover.Ble;
 
 /// <summary>
 /// Common surface shared by both BLE transport backends
-/// (<see cref="WindowsBleTransport"/> and <see cref="UniversalBleTransport"/>),
+/// (<see cref="WindowsBleTransportAsync"/> and <see cref="UniversalBleTransportAsync"/>),
 /// so calling code can work with either without caring which one was picked.
+///
+/// This interface, along with <see cref="BleTransportFactory"/>, is the
+/// entire public API surface of this library's BLE layer. The concrete
+/// transport classes are internal — callers get an instance only through
+/// the factory and interact with it only through this interface.
 /// </summary>
 public interface IBleTransport : ITransport, IDisposable
 {

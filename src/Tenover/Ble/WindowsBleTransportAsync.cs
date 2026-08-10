@@ -17,7 +17,6 @@ using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
-using Windows.Storage.Streams;
 
 namespace Tenover.Ble;
 
@@ -40,7 +39,7 @@ namespace Tenover.Ble;
 /// Internally subscribes to GATT notifications on characteristic 6A4E2810 and
 /// queues them for synchronous consumption by <see cref="Client.Poll"/>.
 /// </summary>
-public sealed class WindowsBleTransportAsync : IBleTransport
+internal sealed class WindowsBleTransportAsync : IBleTransport
 {
     /// <summary>UUID of the notify/register-write characteristic (6A4E2810).</summary>
     private static readonly Guid Char2810Uuid = new("6a4e2810-667b-11e3-949a-0800200c9a66");

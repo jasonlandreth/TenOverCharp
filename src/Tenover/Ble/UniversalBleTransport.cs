@@ -13,7 +13,6 @@
 
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Linq;
 using InTheHand.Bluetooth;
 
 namespace Tenover.Ble;
@@ -32,7 +31,7 @@ namespace Tenover.Ble;
 /// Internally subscribes to GATT notifications on characteristic 6A4E2810 and
 /// queues them for synchronous consumption by <see cref="Client.Poll"/>.
 /// </summary>
-public sealed class UniversalBleTransport : ITransport, IDisposable
+internal sealed class UniversalBleTransport : ITransport, IDisposable
 {
     /// <summary>UUID of the notify/register-write characteristic (6A4E2810).</summary>
     private static readonly Guid Char2810Uuid = new("6a4e2810-667b-11e3-949a-0800200c9a66");
