@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover;
+namespace TenOver;
 
 /// <summary>Protobuf fragmentation header (14 bytes before protobuf payload in 5043/5044).</summary>
 internal struct FragHeader

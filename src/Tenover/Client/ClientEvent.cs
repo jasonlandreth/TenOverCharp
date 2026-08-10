@@ -11,9 +11,9 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-using Tenover.proto;
+using TenOver.proto;
 
-namespace Tenover.Client;
+namespace TenOver.Client;
 
 /// <summary>Events emitted by <see cref="Client.Poll"/>.</summary>
 public abstract class ClientEvent

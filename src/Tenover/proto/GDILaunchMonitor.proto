@@ -18,7 +18,7 @@ syntax = "proto2";
 package GDI.Proto.LaunchMonitor;
 
 option optimize_for = LITE_RUNTIME;
-option csharp_namespace = "Tenover.Proto.LaunchMonitor";
+option csharp_namespace = "TenOver.Proto.LaunchMonitor";
 
 // Top-level service message — one field set per request/response exchange.
 message Service {

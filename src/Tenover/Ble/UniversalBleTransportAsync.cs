@@ -13,10 +13,9 @@
 
 using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Linq;
 using InTheHand.Bluetooth;
 
-namespace Tenover.Ble;
+namespace TenOver.Ble;
 
 /// <summary>
 /// Cross-platform BLE transport for the Garmin R10 using universal Ble.Net APIs.

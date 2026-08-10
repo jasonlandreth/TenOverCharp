@@ -18,7 +18,7 @@ using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 
-namespace Tenover.Ble;
+namespace TenOver.Ble;
 
 /// <summary>
 /// Windows BLE transport for the Garmin R10 using WinRT BLE APIs.

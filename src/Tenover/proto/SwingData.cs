@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.proto;
+namespace TenOver.proto;
 
 /// <summary>Swing timing data (absolute device timestamps in milliseconds).</summary>
 public sealed class SwingData

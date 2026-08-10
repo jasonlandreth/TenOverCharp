@@ -13,9 +13,9 @@
 
 using System.Buffers.Binary;
 using System.Text;
-using Tenover.Exceptions;
+using TenOver.Exceptions;
 
-namespace Tenover;
+namespace TenOver;
 
 // ── Data types ────────────────────────────────────────────────────────────────
 

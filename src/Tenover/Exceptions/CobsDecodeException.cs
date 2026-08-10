@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.Exceptions;
+namespace TenOver.Exceptions;
 
 /// <summary>COBS decoding failed due to malformed data.</summary>
 public sealed class CobsDecodeException : TenoverException

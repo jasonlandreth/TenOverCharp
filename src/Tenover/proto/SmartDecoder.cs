@@ -12,15 +12,15 @@
 // ============================================================================
 
 using Google.Protobuf;
-using Tenover.Exceptions;
-using Tenover.Proto.EventSharing;
-using Tenover.Proto.LaunchMonitor;
+using TenOver.Exceptions;
+using TenOver.Proto.EventSharing;
+using TenOver.Proto.LaunchMonitor;
 // Alias the generated Smart class (same name as its namespace — must qualify it)
 using SmartMsg = Tenover.Proto.Smart.Smart;
-// Alias to avoid collision with the Tenover.Proto.SmartEvent.Error subclass
-using LmError = Tenover.Proto.LaunchMonitor.Error;
+// Alias to avoid collision with the TenOver.Proto.SmartEvent.Error subclass
+using LmError = TenOver.Proto.LaunchMonitor.Error;
 
-namespace Tenover.proto;
+namespace TenOver.proto;
 
 /// <summary>
 /// Builds and decodes the Smart protobuf container messages used by the Garmin R10.

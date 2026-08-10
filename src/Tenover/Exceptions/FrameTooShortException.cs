@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.Exceptions;
+namespace TenOver.Exceptions;
 
 /// <summary>Received frame is too short to be valid.</summary>
 public sealed class FrameTooShortException : TenoverException

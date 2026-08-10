@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover;
+namespace TenOver;
 
 /// <summary>Parsed GFDI frame.</summary>
 internal sealed class GfdiFrame

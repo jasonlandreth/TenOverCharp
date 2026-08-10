@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover;
+namespace TenOver;
 
 /// <summary>
 /// CRC-16/ARC (also CRC-16/LHA, CRC-IBM).

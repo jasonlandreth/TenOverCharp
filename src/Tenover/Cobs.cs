@@ -11,9 +11,9 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-using Tenover.Exceptions;
+using TenOver.Exceptions;
 
-namespace Tenover;
+namespace TenOver;
 
 /// <summary>
 /// COBS (Consistent Overhead Byte Stuffing) codec.

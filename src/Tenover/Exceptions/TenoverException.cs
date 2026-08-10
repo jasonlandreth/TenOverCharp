@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.Exceptions;
+namespace TenOver.Exceptions;
 
 /// <summary>Base exception for all Tenover protocol errors.</summary>
 public class TenoverException : Exception

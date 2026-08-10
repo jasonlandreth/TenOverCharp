@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.Exceptions;
+namespace TenOver.Exceptions;
 
 /// <summary>MultiLink registration failed.</summary>
 public sealed class MultiLinkRegisterException : TenoverException

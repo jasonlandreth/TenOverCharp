@@ -1,9 +1,9 @@
 ﻿ 
 using System.Drawing.Drawing2D; 
-using Tenover.Ble;
-using Tenover.Client;
-using Tenover.Exceptions;
-using Tenover.proto;
+using TenOver.Ble;
+using TenOver.Client;
+using TenOver.Exceptions;
+using TenOver.proto;
 
 namespace TenOver.WinForm.Example
 {
@@ -232,7 +232,7 @@ namespace TenOver.WinForm.Example
 
             using (transport)
             {
-                var client = new Client(transport, mtu: 20);
+                var client = new Client.Client(transport, mtu: 20);
                 client.Start();
 
                 int shotCount = 0;

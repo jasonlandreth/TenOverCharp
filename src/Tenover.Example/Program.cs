@@ -20,10 +20,10 @@
 // Auto-discovers a paired R10 and connects. The device must be paired at the OS level
 // (Windows Settings → Bluetooth → Add a device → Approach R10).
 
-using Tenover;
-using Tenover.Ble;
-using Tenover.Client;
-using Tenover.Exceptions;
+using TenOver;
+using TenOver.Ble;
+using TenOver.Client;
+using TenOver.Exceptions;
 
 const float MsToMph = 2.237f;
 

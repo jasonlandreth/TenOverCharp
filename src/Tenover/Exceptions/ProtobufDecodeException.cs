@@ -10,7 +10,7 @@
 // The original Rust code is licensed under the Apache License, Version 2.0.
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
-namespace Tenover.Exceptions;
+namespace TenOver.Exceptions;
 
 /// <summary>Protobuf deserialization failed.</summary>
 public sealed class ProtobufDecodeException : TenoverException

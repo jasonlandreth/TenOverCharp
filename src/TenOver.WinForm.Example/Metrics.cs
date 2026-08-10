@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Tenover.proto;
+using TenOver.proto;
 
 namespace TenOver.WinForm.Example
 {

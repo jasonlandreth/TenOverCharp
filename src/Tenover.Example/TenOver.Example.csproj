@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <AssemblyName>tenover-example</AssemblyName>
-    <RootNamespace>Tenover.Example</RootNamespace>
+    <RootNamespace>TenOver.Example</RootNamespace>
     <Description>Connect to a Garmin R10 over BLE and print shot data to the console.</Description>
   </PropertyGroup>
 

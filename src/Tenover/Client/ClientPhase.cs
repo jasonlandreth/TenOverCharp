@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.Client;
+namespace TenOver.Client;
 
 /// <summary>Connection phases of the <see cref="Client"/> state machine.</summary>
 public enum ClientPhase

@@ -12,17 +12,11 @@
 // ============================================================================
 
 using System.Buffers.Binary;
-using Tenover.Ble;
-using Tenover.Exceptions;
-using Tenover.proto;
+using TenOver.Ble;
+using TenOver.Exceptions;
+using TenOver.proto;
 
-namespace Tenover.Client;
-
-// ── Events ────────────────────────────────────────────────────────────────────
-
-// ── Phase ─────────────────────────────────────────────────────────────────────
-
-// ── Client ────────────────────────────────────────────────────────────────────
+namespace TenOver.Client;
 
 /// <summary>
 /// Poll-based Garmin R10 client.
@@ -131,9 +125,13 @@ public sealed class Client
 
     return null;
   }
-
-  // ── Frame dispatch ────────────────────────────────────────────────────────
-
+  
+  /// <summary>
+  /// Handle the REGISTER_RESPONSE from the MultiLink registration command.
+  /// </summary>
+  /// <param name="chunk"></param>
+  /// <returns></returns>
+  /// <exception cref="MultiLinkRegisterException"></exception>
   private ClientEvent? HandleRegisterResponse(ReadOnlySpan<byte> chunk)
   {
     var parsed = Multilink.ParseRegisterResponse(chunk);

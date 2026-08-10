@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover;
+namespace TenOver;
 
 /// <summary>Device information from the 5024 handshake message.</summary>
 internal sealed class DeviceInfo

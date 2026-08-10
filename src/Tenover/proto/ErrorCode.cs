@@ -11,6 +11,6 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.proto;
+namespace TenOver.proto;
 
 public enum ErrorCode { Unknown, Overheating, RadarSaturation, PlatformTilted }

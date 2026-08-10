@@ -20,7 +20,7 @@ package GDI.Proto.EventSharing;
 import "GDILaunchMonitor.proto";
 
 option optimize_for = LITE_RUNTIME;
-option csharp_namespace = "Tenover.Proto.EventSharing";
+option csharp_namespace = "TenOver.Proto.EventSharing";
 
 enum AlertType {
   ACTIVITY_START              = 0;

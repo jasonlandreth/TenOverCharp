@@ -4,12 +4,16 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>Tenover</AssemblyName>
-    <RootNamespace>Tenover</RootNamespace>
+    <AssemblyName>TenOver</AssemblyName>
+    <RootNamespace>TenOver</RootNamespace>
     <Description>Client library for the Garmin R10 launch monitor BLE/GFDI/protobuf protocol (C# port of 10over)</Description>
     <Version>0.0.3</Version>
   </PropertyGroup>
-
+<!-- In Tenover.csproj -->
+<ItemGroup>
+  <InternalsVisibleTo Include="Tenover.Example" />
+  <InternalsVisibleTo Include="TenOver.WinForm.Example" />
+</ItemGroup>
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.27.3" />
     <PackageReference Include="Grpc.Tools" Version="2.66.0" PrivateAssets="All" />

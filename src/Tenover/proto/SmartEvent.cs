@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.proto;
+namespace TenOver.proto;
 
 /// <summary>High-level event decoded from a Smart protobuf message received from the R10.</summary>
 public abstract class SmartEvent

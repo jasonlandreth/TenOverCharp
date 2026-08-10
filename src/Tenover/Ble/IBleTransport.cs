@@ -13,7 +13,7 @@
 
 using System;
 
-namespace Tenover.Ble;
+namespace TenOver.Ble;
 
 /// <summary>
 /// Common surface shared by both BLE transport backends

@@ -11,7 +11,7 @@
 // You may obtain a copy of the License at: http://apache.org
 // ============================================================================
 
-namespace Tenover.Ble;
+namespace TenOver.Ble;
 
 /// <summary>
 /// Transport abstraction — the caller provides the BLE read/write implementation.

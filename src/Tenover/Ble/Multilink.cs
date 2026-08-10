@@ -13,7 +13,7 @@
 
 using System.Buffers.Binary;
 
-namespace Tenover.Ble;
+namespace TenOver.Ble;
 
 /// <summary>
 /// MultiLink transport multiplexer.

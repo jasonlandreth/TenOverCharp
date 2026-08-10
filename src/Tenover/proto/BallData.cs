@@ -1,4 +1,4 @@
-﻿namespace Tenover.proto;
+﻿namespace TenOver.proto;
 
 /// <summary>Ball flight metrics. Speeds in m/s, angles in degrees, spin in RPM.</summary>
 public sealed class BallData
