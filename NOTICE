@@ -1,0 +1,16 @@
+TenOverCharp
+Copyright (c) 2026 Jason Landreth
+
+This product includes software (the Garmin R10 BLE/GFDI protocol logic)
+ported from the '10over' project:
+
+    Copyright 2026 Eric Thill (https://github.com/divotmaker)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+See LICENSE-APACHE.txt in this repository for the full license text, and
+LICENSE for the terms under which this port (TenOverCharp) is distributed.
