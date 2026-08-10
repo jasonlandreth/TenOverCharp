@@ -1,0 +1,21 @@
+OPENSWING PERSONAL USE LICENSE & ATTRIBUTION
+
+OpenSwing is a personal golf simulator application. 
+The Garmin R10 connection logic is a C# port of the '10over' project. 
+Original Rust implementation by divotmaker (https://github.com).
+
+-------------------------------------------------------------------------------
+ORIGINAL WORK LICENSE NOTICE:
+The original '10over' project is licensed under the Apache License, Version 2.0.
+A copy of the Apache License 2.0 is included in this repository as 'LICENSE-APACHE.txt'.
+-------------------------------------------------------------------------------
+
+TERMS FOR OPENSWING:
+Copyright (c) 2026 Jason Landreth. All rights reserved.
+
+This is a personal hobby project. I code to my own preferences and standards!
+1. You are welcome to download, view, and modify this code for your own personal use.
+2. If you share your modified version of OpenSwing, you must include this license and credit divotmaker for the underlying R10 logic.
+3. You may not sell OpenSwing or use it for commercial products.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.

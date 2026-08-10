@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>tenover-example</AssemblyName>
+    <RootNamespace>Tenover.Example</RootNamespace>
+    <Description>Connect to a Garmin R10 over BLE and print shot data to the console.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TenOver\TenOver.csproj" />
+  </ItemGroup>
+</Project>

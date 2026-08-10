@@ -1,0 +1,31 @@
+// ============================================================================
+// TenOver - Client library for the Garmin R10 launch monitor
+// Copyright (c) 2026 Jason Landreth. All rights reserved.
+// 
+// Portions Copyright (c) divotmaker. All rights reserved.
+// This file contains C# code ported from the '10over' Rust project
+// created by divotmaker (https://github.com) to connect
+// to the Garmin R10 Launch Monitor.
+//
+// The original Rust code is licensed under the Apache License, Version 2.0.
+// You may obtain a copy of the License at: http://apache.org
+// ============================================================================
+// Reconstructed from protocol analysis of the Garmin R10.
+// Container message for all Garmin Device Interface (GDI) protobuf services.
+
+syntax = "proto2";
+
+package GDI.Proto.Smart;
+
+import "GDIEventSharing.proto";
+import "GDILaunchMonitor.proto";
+
+option optimize_for = LITE_RUNTIME;
+option csharp_namespace = "Tenover.Proto.Smart";
+
+message Smart {
+  // Extension field 30: EventSharing service
+  optional GDI.Proto.EventSharing.EventSharingService event_sharing = 30;
+  // Extension field 38: LaunchMonitor service
+  optional GDI.Proto.LaunchMonitor.Service launch_monitor_service = 38;
+}

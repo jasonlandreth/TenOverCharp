@@ -1,0 +1,89 @@
+// ============================================================================
+// TenOver - Client library for the Garmin R10 launch monitor
+// Copyright (c) 2026 Jason Landreth. All rights reserved.
+// 
+// Portions Copyright (c) divotmaker. All rights reserved.
+// This file contains C# code ported from the '10over' Rust project
+// created by divotmaker (https://github.com) to connect
+// to the Garmin R10 Launch Monitor.
+//
+// The original Rust code is licensed under the Apache License, Version 2.0.
+// You may obtain a copy of the License at: http://apache.org
+// ============================================================================
+// Reconstructed from protocol analysis of the Garmin R10.
+// Event sharing service — alert subscriptions and notifications.
+
+syntax = "proto2";
+
+package GDI.Proto.EventSharing;
+
+import "GDILaunchMonitor.proto";
+
+option optimize_for = LITE_RUNTIME;
+option csharp_namespace = "Tenover.Proto.EventSharing";
+
+enum AlertType {
+  ACTIVITY_START              = 0;
+  ACTIVITY_STOP               = 1;
+  ACTIVITY_DISTANCE           = 2;
+  ACTIVITY_TIME               = 3;
+  ACTIVITY_AUTO_LAP           = 4;
+  ACTIVITY_MANUAL_LAP         = 5;
+  ACTIVITY_TRANSITION         = 6;
+  SWITCHER_STATUS_CHANGE      = 7;
+  LAUNCH_MONITOR              = 8;
+  NAVIGATION_UPDATE           = 9;
+  BREAK_PLANNER_STATE_CHANGE  = 10;
+  DRIVING_STATE_CHANGE        = 11;
+  BLUETOOTH_CLASSIC_STATE_CHANGE = 12;
+  GOLF_STATE_CHANGE           = 13;
+  RANGEFINDER_MEASUREMENT     = 14;
+  XERO_CHRONOGRAPH            = 15;
+  GOLF_CLUB_STATUS_CHANGE     = 16;
+  DIVE_READINESS_CHANGE       = 17;
+}
+
+message EventSharingService {
+  optional SubscribeRequest      subscribe_request   = 1;
+  optional SubscribeResponse     subscribe_response  = 2;
+  optional AlertNotification     alert_notification   = 3;
+  optional AlertSupportRequest   support_request      = 4;
+  optional AlertSupportResponse  support_response     = 5;
+}
+
+message AlertMessage {
+  optional AlertType type     = 1;
+  optional uint32    interval = 2;
+}
+
+message SubscribeRequest {
+  repeated AlertMessage alerts          = 1;
+  optional uint32       target_distance = 2;
+}
+
+message AlertSupportRequest {
+}
+
+message SubscribeResponse {
+  message AlertStatusMessage {
+    enum Status {
+      SUCCESS = 0;
+      FAIL    = 1;
+    }
+    required Status       subscribe_status = 1;
+    optional AlertMessage type             = 2;
+  }
+  repeated AlertStatusMessage alert_status = 1;
+}
+
+message AlertSupportResponse {
+  repeated AlertType supported_alerts = 1;
+  repeated uint32    version_num      = 2;
+}
+
+message AlertNotification {
+  repeated AlertType alert_type        = 1;
+
+  // Extension field 1001: AlertDetails from LaunchMonitor (inlined — original proto2 used extensions)
+  optional GDI.Proto.LaunchMonitor.AlertDetails details = 1001;
+}

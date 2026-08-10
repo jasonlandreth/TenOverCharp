@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Tenover</AssemblyName>
+    <RootNamespace>Tenover</RootNamespace>
+    <Description>Client library for the Garmin R10 launch monitor BLE/GFDI/protobuf protocol (C# port of 10over)</Description>
+    <Version>0.0.3</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.27.3" />
+    <PackageReference Include="Grpc.Tools" Version="2.66.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- Proto files — all three are in the same folder so imports resolve without extra flags -->
+  <ItemGroup>
+    <Protobuf Include="proto\GDISmart.proto"        GrpcServices="None" ProtoRoot="proto" />
+    <Protobuf Include="proto\GDIEventSharing.proto" GrpcServices="None" ProtoRoot="proto" />
+    <Protobuf Include="proto\GDILaunchMonitor.proto" GrpcServices="None" ProtoRoot="proto" />
+  </ItemGroup>
+</Project>
