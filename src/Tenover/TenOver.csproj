@@ -15,11 +15,13 @@
   <InternalsVisibleTo Include="TenOver.WinForm.Example" />
 </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Google.Protobuf" Version="3.27.3" />
-    <PackageReference Include="Grpc.Tools" Version="2.66.0" PrivateAssets="All" />
+    <PackageReference Include="Google.Protobuf" Version="3.36.0-rc2" />
+    <PackageReference Include="Grpc.Tools" Version="2.83.0" PrivateAssets="All" />
     <PackageReference Include="InTheHand.BluetoothLE" Version="4.0.44" />
+    <PackageReference Include="log4net" Version="3.4.0-preview.1" />
+    <PackageReference Include="log4net.Ext.Json" Version="3.0.3" />
+    <PackageReference Include="log4net.Ext.Json.Net" Version="3.0.3" />
   </ItemGroup>
-
   <!-- Proto files — all three are in the same folder so imports resolve without extra flags -->
   <ItemGroup>
     <Protobuf Include="proto\GDISmart.proto" GrpcServices="None" ProtoRoot="proto" />

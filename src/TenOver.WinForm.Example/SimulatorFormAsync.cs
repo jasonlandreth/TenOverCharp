@@ -19,12 +19,18 @@ namespace TenOver.WinForm.Example
         private CancellationTokenSource? _pollCts;
         private Task? _pollTask;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SimulatorFormAsync"/> class and configures the simulation panel.
+        /// </summary>
         public SimulatorFormAsync()
         {
             InitializeComponent();
             SetupSimulatorEngine();
         }
 
+        /// <summary>
+        /// Enables double buffering on the simulation panel to eliminate GDI+ flicker during animation.
+        /// </summary>
         private void SetupSimulatorEngine()
         {
             // Force panelSim to use DoubleBuffering to eliminate GDI+ screen flickering
@@ -35,6 +41,11 @@ namespace TenOver.WinForm.Example
                 null, panelSim, new object[] { true });
         }
 
+        /// <summary>
+        /// Handles the form's Load event by setting the initial connection status text.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Event arguments.</param>
         private void SimulatorForm_Load(object sender, EventArgs e)
         {
             SetStatus("Connection Status: Disconnected");
@@ -42,6 +53,13 @@ namespace TenOver.WinForm.Example
 
         // ── Hardware Connection & Event Handling ─────────────────────────────
 
+        /// <summary>
+        /// Handles the Connect button click by awaiting the Garmin R10 connection directly on the UI thread.
+        /// The connect itself is a real async method, so no Task.Run is needed here — only the background
+        /// poll loop started inside <see cref="ConnectToGarminR10Async"/> runs off the UI thread.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Event arguments.</param>
         private async void btnConnect_ButtonClick(object sender, EventArgs e)
         {
             // Await the connect directly on the UI thread — this is what
@@ -57,6 +75,7 @@ namespace TenOver.WinForm.Example
         /// <summary>
         /// Main hardware event hook. Receives Garmin R10 ShotData and triggers calculations & rendering.
         /// </summary>
+        /// <param name="shot">The shot data received from the Garmin R10 device.</param>
         public async void HandleGarminShotData(ShotData shot)
         {
             // Verify safe Cross-Thread execution handshakes
@@ -111,30 +130,46 @@ namespace TenOver.WinForm.Example
             await AnimateGarminShotAsync();
         }
 
+        /// <summary>
+        /// Advances <see cref="_frameIndex"/> through the current shot's trajectory points at roughly 60 FPS,
+        /// invalidating the simulation panel each step so <see cref="panelSim_Paint"/> redraws the animated ball flight.
+        /// </summary>
+        /// <returns>A task that completes once the animation reaches the final trajectory point.</returns>
         private async Task AnimateGarminShotAsync()
         {
-            // Check .HasValue before accessing TrajectoryPoints
             if (_isAnimating || !_currentShot.HasValue || _currentShot.Value.TrajectoryPoints == null)
+            {
                 return;
+            }
 
             _isAnimating = true;
             _frameIndex = 0;
 
             var currentShot = _currentShot.Value;
+            int lastIndex = currentShot.TrajectoryPoints.Count - 1;
 
-            while (_frameIndex < currentShot.TrajectoryPoints.Count)
+            while (_frameIndex < lastIndex)
             {
-                _frameIndex += 3; // Step multiplier for tracer speed
-                panelSim.Invalidate(); // Triggers canvas repaint
-
-                await Task.Delay(16); // ~60 FPS delay loop
+                _frameIndex = Math.Min(_frameIndex + 3, lastIndex); // clamp so it always lands exactly on the final point
+                panelSim.Invalidate();
+                await Task.Delay(16);
             }
 
             _isAnimating = false;
         }
-
         // ── 3D Perspective Projection & Rendering Engine ───────────────────
 
+        /// <summary>
+        /// Projects a trajectory point's downrange distance, height, and side deviation into 2D screen coordinates,
+        /// applying a simple distance-based perspective scale.
+        /// </summary>
+        /// <param name="distanceYds">Downrange distance from the tee, in yards.</param>
+        /// <param name="heightMeters">Height of the ball above the ground, in meters.</param>
+        /// <param name="deviationYds">Side deviation from the target line, in yards.</param>
+        /// <param name="currentTeeX">The tee's X pixel position for the current panel size.</param>
+        /// <param name="currentTeeY">The tee's Y pixel position for the current panel size.</param>
+        /// <param name="pixelsPerYard">The current scale factor, in pixels per yard.</param>
+        /// <returns>The projected screen-space point.</returns>
         public PointF ProjectToScreen(float distanceYds, float heightMeters, float deviationYds, float currentTeeX, float currentTeeY, float pixelsPerYard)
         {
             // Clamped perspective scale factor
@@ -154,25 +189,35 @@ namespace TenOver.WinForm.Example
             return new PointF(screenX, screenY);
         }
 
+        /// <summary>
+        /// Paints the ball flight trail and animated ball indicator onto the simulation panel,
+        /// using the calibrated tee position and yard-to-pixel scale for the current background image.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Paint event arguments containing the drawing surface.</param>
         private void panelSim_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            // 1. Guard against null struct or uninitialized trajectory points
-            if (!_currentShot.HasValue) return;
+            if (!_currentShot.HasValue)
+            {
+                return;
+            }
 
             var currentShot = _currentShot.Value;
-            if (currentShot.TrajectoryPoints == null || currentShot.TrajectoryPoints.Count == 0) return;
+            if (currentShot.TrajectoryPoints == null || currentShot.TrajectoryPoints.Count == 0)
+            {
+                return;
+            }
 
-            // --- Calibration Registry (Image reference base: 1920x1080) ---
+            // --- Calibration Registry (measured directly from background art at 1920x1080) ---
             const float rawImageWidth = 1920f;
             const float rawImageHeight = 1080f;
-            const float rawTeeX = 960f;
-            const float rawTeeY = 960f;
-            const float raw150Y = 540f;
+            const float rawTeeX = 821f;
+            const float rawTeeY = 866f;
+            const float raw150Y = 418f;
 
-            // --- Dynamic Scaling for Responsive Resizing ---
             float ratioX = panelSim.Width / rawImageWidth;
             float ratioY = panelSim.Height / rawImageHeight;
 
@@ -183,11 +228,10 @@ namespace TenOver.WinForm.Example
             float pixelDistanceTo150 = currentTeeY - current150Y;
             float pixelsPerYard = pixelDistanceTo150 / 150f;
 
-            // --- Draw Ball Flight Arc Line ---
             using (Pen ballPen = new Pen(Color.White, 3f))
             {
-                int maxIndex = Math.Min(_frameIndex, currentShot.TrajectoryPoints.Count);
-                for (int i = 1; i < maxIndex; i++)
+                int maxIndex = Math.Min(_frameIndex, currentShot.TrajectoryPoints.Count - 1);
+                for (int i = 1; i <= maxIndex; i++)
                 {
                     var pt1 = currentShot.TrajectoryPoints[i - 1];
                     var pt2 = currentShot.TrajectoryPoints[i];
@@ -199,7 +243,6 @@ namespace TenOver.WinForm.Example
                 }
             }
 
-            // --- Draw Animated Ball Indicator ---
             if (_frameIndex < currentShot.TrajectoryPoints.Count)
             {
                 var pos = currentShot.TrajectoryPoints[_frameIndex];
@@ -214,6 +257,11 @@ namespace TenOver.WinForm.Example
             }
         }
 
+        /// <summary>
+        /// Reserved paint handler for the metrics panel. Currently unused.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Paint event arguments containing the drawing surface.</param>
         private void panelMetrics_Paint(object sender, PaintEventArgs e)
         {
             // Optional custom metric panel painting
@@ -226,6 +274,7 @@ namespace TenOver.WinForm.Example
         ///    the UI thread stays responsive. Await this directly from a UI
         ///    event handler — do not wrap it in Task.Run.
         /// </summary>
+        /// <returns>A task that completes once the connection has closed and cleanup has finished.</returns>
         private async Task ConnectToGarminR10Async()
         {
             SetStatus("Searching for Garmin R10...");
@@ -286,6 +335,8 @@ namespace TenOver.WinForm.Example
         /// SetStatus and HandleGarminShotData both marshal back to the UI
         /// thread themselves, so it's safe to call them directly from here.
         /// </summary>
+        /// <param name="client">The connected protocol client to poll for events.</param>
+        /// <param name="ct">Cancellation token signaled when the poll loop should stop.</param>
         private void PollLoop(Client.Client client, CancellationToken ct)
         {
             int shotCount = 0;
@@ -355,6 +406,11 @@ namespace TenOver.WinForm.Example
             }
         }
 
+        /// <summary>
+        /// Handles the Disconnect button click by signaling the background poll loop to stop.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Event arguments.</param>
         private void btnDisconnect_ButtonClick(object sender, EventArgs e)
         {
             StopPollingAndDisconnect();
@@ -370,6 +426,11 @@ namespace TenOver.WinForm.Example
             _pollCts?.Cancel();
         }
 
+        /// <summary>
+        /// Ensures the background poll loop is signaled to stop when the form is closing,
+        /// so the connection is cleaned up rather than left running.
+        /// </summary>
+        /// <param name="e">Form-closing event arguments.</param>
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             StopPollingAndDisconnect();
@@ -379,8 +440,8 @@ namespace TenOver.WinForm.Example
         /// <summary>
         ///     Thread-safe method to update the status label on the UI. If called from a non-UI thread, it will marshal the call to the UI thread using BeginInvoke.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="backColor"></param>
+        /// <param name="text">The status message to display.</param>
+        /// <param name="backColor">Optional background color to apply to the status label.</param>
         private void SetStatus(string text, Color? backColor = null)
         {
             if (InvokeRequired)
@@ -391,7 +452,9 @@ namespace TenOver.WinForm.Example
 
             lblStatus.Text = text;
             if (backColor.HasValue)
+            {
                 lblStatus.BackColor = backColor.Value;
+            }
         }
     }
 }

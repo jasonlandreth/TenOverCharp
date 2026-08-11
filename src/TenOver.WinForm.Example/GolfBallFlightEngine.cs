@@ -4,7 +4,6 @@ using TenOver.proto;
 
 namespace TenOver.WinForm.Example
 {
-
     /// <summary>
     /// Represents a 3D vector or spatial coordinate point (X = Downrange, Y = Height, Z = Lateral).
     /// </summary>
@@ -31,6 +30,7 @@ namespace TenOver.WinForm.Example
             return new Vector3D(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
         }
     }
+
     /// <summary>
     /// Represents a single 3D spatial coordinate and timestamp during ball flight.
     /// </summary>
@@ -135,6 +135,7 @@ namespace TenOver.WinForm.Example
                     maxApex = TrajectoryPoints[i].Y;
                 }
             }
+
             ApexMeters = maxApex;
 
             // 2. Flight Time (Timestamp of final impact point)
@@ -209,12 +210,8 @@ namespace TenOver.WinForm.Example
         /// <summary>
         /// Numerical flight integrator generating 3D TrajectoryPoints.
         /// </summary>
-        private static List<TrajectoryPoint> SimulateFlightPath(
-            float speedMph,
-            float launchAngleDeg,
-            float launchDirDeg,
-            float spinRpm,
-            float spinAxisDeg)
+        private static List<TrajectoryPoint> SimulateFlightPath(float speedMph, float launchAngleDeg,
+            float launchDirDeg, float spinRpm, float spinAxisDeg)
         {
             var points = new List<TrajectoryPoint>();
 

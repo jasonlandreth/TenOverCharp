@@ -17,7 +17,7 @@ using TenOver.Proto.EventSharing;
 using TenOver.Proto.LaunchMonitor;
 
 // Alias the generated Smart class (same name as its namespace — must qualify it)
-using SmartMsg = Tenover.Proto.Smart.Smart;
+using SmartMsg = TenOver.Proto.Smart.Smart;
 
 // Alias to avoid collision with the TenOver.Proto.SmartEvent.Error subclass
 using LmError = TenOver.Proto.LaunchMonitor.Error;

@@ -20,14 +20,18 @@
 // Auto-discovers a paired R10 and connects. The device must be paired at the OS level
 // (Windows Settings → Bluetooth → Add a device → Approach R10).
 
-using TenOver;
+using log4net;
+using log4net.Config;
 using TenOver.Ble;
 using TenOver.Client;
 using TenOver.Exceptions;
 
+var logRepository = LogManager.GetRepository(System.Reflection.Assembly.GetEntryAssembly());
+XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+ILog log = LogManager.GetLogger(typeof(Program));
 const float MsToMph = 2.237f;
 
-Console.Error.WriteLine("searching for Garmin R10...");
+log.Info("searching for Garmin R10...");
 
 WindowsBleTransport transport;
 try
@@ -36,11 +40,11 @@ try
 }
 catch (Exception ex)
 {
-  Console.Error.WriteLine($"connection failed: {ex.Message}");
+  log.Info($"connection failed: {ex.Message}");
   return 1;
 }
 
-Console.Error.WriteLine($"connected  {transport.DeviceAddress}  ({transport.DeviceName})");
+log.Info($"connected  {transport.DeviceAddress}  ({transport.DeviceName})");
 
 using (transport)
 {
@@ -64,11 +68,11 @@ using (transport)
       switch (ev)
       {
         case ClientEvent.Registered r:
-          Console.Error.WriteLine($"registered  handle={r.Handle}");
+          log.Info($"registered  handle={r.Handle}");
           break;
 
         case ClientEvent.HandshakeComplete:
-          Console.Error.WriteLine("handshake complete");
+          log.Info("handshake complete");
           break;
 
         case ClientEvent.Subscribed:
@@ -79,7 +83,7 @@ using (transport)
         case ClientEvent.Ready:
           if (!readyPrinted)
           {
-            Console.Error.WriteLine("READY — waiting for shot");
+            log.Info("READY — waiting for shot");
             readyPrinted = true;
           }
           break;
@@ -89,23 +93,23 @@ using (transport)
           break;
 
         case ClientEvent.DeviceError de:
-          Console.Error.WriteLine($"DEVICE ERROR: {de.Error.Code} ({de.Error.Severity})");
+          log.Error($"DEVICE ERROR: {de.Error.Code} ({de.Error.Severity})");
           if (de.Error.Tilt is { } tilt)
-            Console.Error.WriteLine($"  tilt: roll={tilt.Roll:F1}°  pitch={tilt.Pitch:F1}°");
+            log.Error($"  tilt: roll={tilt.Roll:F1}°  pitch={tilt.Pitch:F1}°");
           break;
 
         case ClientEvent.Shot s:
           {
             readyPrinted = false;
             shotCount++;
-            Console.WriteLine($"\n── Shot #{shotCount} (id={s.Data.ShotId}) ──");
+            log.Info($"\n── Shot #{shotCount} (id={s.Data.ShotId}) ──");
 
             if (s.Data.Ball is { } b)
             {
-              Console.WriteLine(
+              log.Info(
                   $"  Ball: {b.BallSpeed * MsToMph,6:F1} mph  " +
                   $"LA {b.LaunchAngle,5:F1}°  Dir {b.LaunchDirection,5:F1}°");
-              Console.WriteLine(
+              log.Info(
                   $"  Spin: {b.TotalSpin,6:F0} RPM  axis {b.SpinAxis,5:F1}°  " +
                   $"(back {b.Backspin,6:F0}, side {b.Sidespin,5:F0})  [{b.SpinCalcType}]");
             }
@@ -123,7 +127,7 @@ using (transport)
                   ? sw.DownswingStart - sw.BackswingStart : 0u;
               uint down = sw.Impact >= sw.DownswingStart
                   ? sw.Impact - sw.DownswingStart : 0u;
-              Console.WriteLine($"  Tempo: backswing {tempo} ms  downswing {down} ms");
+              log.Info($"  Tempo: backswing {tempo} ms  downswing {down} ms");
             }
             break;
           }
@@ -132,11 +136,11 @@ using (transport)
     catch (TenoverException ex)
     {
       // Non-fatal protocol warnings (CRC glitch, unknown frame, etc.)
-      Console.Error.WriteLine($"warning: {ex.Message}");
+      log.Warn($"warning: {ex.Message}"); 
     }
     catch (Exception ex)
     {
-      Console.Error.WriteLine($"fatal: {ex.Message}");
+      log.Warn($"warning: {ex.Message}");
       return 1;
     }
   }

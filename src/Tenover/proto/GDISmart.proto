@@ -21,7 +21,7 @@ import "GDIEventSharing.proto";
 import "GDILaunchMonitor.proto";
 
 option optimize_for = LITE_RUNTIME;
-option csharp_namespace = "Tenover.Proto.Smart";
+option csharp_namespace = "TenOver.Proto.Smart";
 
 message Smart {
   // Extension field 30: EventSharing service
