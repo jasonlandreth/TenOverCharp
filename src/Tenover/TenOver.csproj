@@ -22,7 +22,7 @@
 
   <!-- Proto files — all three are in the same folder so imports resolve without extra flags -->
   <ItemGroup>
-    <Protobuf Include="proto\GDISmart.proto"        GrpcServices="None" ProtoRoot="proto" />
+    <Protobuf Include="proto\GDISmart.proto" GrpcServices="None" ProtoRoot="proto" />
     <Protobuf Include="proto\GDIEventSharing.proto" GrpcServices="None" ProtoRoot="proto" />
     <Protobuf Include="proto\GDILaunchMonitor.proto" GrpcServices="None" ProtoRoot="proto" />
   </ItemGroup>

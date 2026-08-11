@@ -13,4 +13,10 @@
 
 namespace TenOver.proto;
 
-public enum ErrorCode { Unknown, Overheating, RadarSaturation, PlatformTilted }
+public enum ErrorCode
+{
+    Unknown,
+    Overheating,
+    RadarSaturation,
+    PlatformTilted
+}

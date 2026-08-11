@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using System.Diagnostics;
 using System.Drawing.Drawing2D; 
 using TenOver.Ble;
 using TenOver.Client;
@@ -81,11 +82,17 @@ namespace TenOver.WinForm.Example
 
             SetStatus(metrics);
             // 3. Calculate conversions
+            if(shot?.Club == null)
+            {
+                SetStatus("Warning: Missing Club metrics in Garmin shot data.");
+                return;
+            }
             float ballSpeedMph = shot.Ball.BallSpeed * 2.23694f; // m/s to MPH
             float clubSpeedMph = shot.Club != null ? shot.Club.ClubHeadSpeed * 2.23694f : 0f;
             float smashFactor = clubSpeedMph > 0 ? ballSpeedMph / clubSpeedMph : 0f;
             float faceToPath = shot.Club.FaceAngle - shot.Club.PathAngle; // degrees
 
+            Debug.WriteLine($"Calculated Metrics: FaceToPath={faceToPath:F2}°, ClubSpeed={clubSpeedMph:F1} MPH, BallSpeed={ballSpeedMph:F1} MPH, SmashFactor={smashFactor:F2}");
             // 4. Update each Metric Tile using OnValueUpdated with MetricValueEventArgs
             tileFaceToPath.OnValueUpdated(this, new MetricValueEventArgs($"{faceToPath:F2}"));
             tileClubSpeed.OnValueUpdated(this, new MetricValueEventArgs($"{ballSpeedMph:F1}"));
