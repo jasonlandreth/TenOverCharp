@@ -1,10 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
+        <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -33,10 +37,7 @@
     <PackageReference Include="log4net.Ext.Json" Version="3.0.3" />
     <PackageReference Include="log4net.Ext.Json.Net" Version="3.0.3" />
   </ItemGroup>
-<ItemGroup>
-  <PackageReference Include="log4net" Version="2.0.17" />
-</ItemGroup>
-<ItemGroup>
+  <ItemGroup>
   <None Include="log4net.config" CopyToOutputDirectory="PreserveNewest" />
 </ItemGroup>
 

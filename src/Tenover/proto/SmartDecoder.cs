@@ -12,15 +12,15 @@
 // ============================================================================
 
 using Google.Protobuf;
+using TenOver.Client.Metrics;
 using TenOver.Exceptions;
 using TenOver.Proto.EventSharing;
 using TenOver.Proto.LaunchMonitor;
-
-// Alias the generated Smart class (same name as its namespace — must qualify it)
-using SmartMsg = TenOver.Proto.Smart.Smart;
-
+using BallMetrics = TenOver.Proto.LaunchMonitor.BallMetrics;
 // Alias to avoid collision with the TenOver.Proto.SmartEvent.Error subclass
 using LmError = TenOver.Proto.LaunchMonitor.Error;
+// Alias the generated Smart class (same name as its namespace — must qualify it)
+using SmartMsg = TenOver.Proto.Smart.Smart;
 
 namespace TenOver.proto;
 
@@ -29,7 +29,7 @@ namespace TenOver.proto;
 /// </summary>
 public static class SmartDecoder
 {
- 
+    const float MpsToMph = 2.236936f;
     /// <summary>Build a Subscribe(LAUNCH_MONITOR) Smart message.</summary>
     public static byte[] BuildSubscribeRequest()
     {
@@ -150,13 +150,13 @@ public static class SmartDecoder
 
             ball = new BallData
             {
-                LaunchAngle = b.HasLaunchAngle ? b.LaunchAngle : 0f,
-                LaunchDirection = b.HasLaunchDirection ? b.LaunchDirection : 0f,
-                BallSpeed = b.HasBallSpeed ? b.BallSpeed : 0f,
+                VerticalLaunchAngle = b.HasLaunchAngle ? b.LaunchAngle : 0f,
+                HorizontalLaunchDirection = b.HasLaunchDirection ? b.LaunchDirection : 0f,
+                BallSpeed = b.HasBallSpeed ? b.BallSpeed * MpsToMph : 0f,
                 SpinAxis = spinAxis,
                 TotalSpin = total,
                 Backspin = total * MathF.Cos(axisRad),
-                Sidespin = total * MathF.Sin(axisRad),
+                SideSpin = total * MathF.Sin(axisRad),
                 SpinCalcType = b.HasSpinCalculationType
                     ? b.SpinCalculationType switch
                     {
@@ -174,9 +174,9 @@ public static class SmartDecoder
         {
             club = new ClubData
             {
-                ClubHeadSpeed = c.HasClubHeadSpeed ? c.ClubHeadSpeed : 0f,
-                FaceAngle = c.HasClubAngleFace ? c.ClubAngleFace : 0f,
-                PathAngle = c.HasClubAnglePath ? c.ClubAnglePath : 0f,
+                ClubHeadSpeed = c.HasClubHeadSpeed ? c.ClubHeadSpeed * MpsToMph : 0f,
+                FaceToTarget = c.HasClubAngleFace ? c.ClubAngleFace : 0f,
+                PathToTarget = c.HasClubAnglePath ? c.ClubAnglePath : 0f,
                 AttackAngle = c.HasAttackAngle ? c.AttackAngle : 0f,
             };
         }
