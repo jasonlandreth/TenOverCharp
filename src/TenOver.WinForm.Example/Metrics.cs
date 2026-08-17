@@ -45,8 +45,8 @@ namespace TenOver.WinForm.Example
             if (shot?.Ball != null)
             {
                 metrics.BallSpeedMph = shot.Ball.BallSpeed * 2.23694f;
-                metrics.LaunchAngle = shot.Ball.LaunchAngle;
-                metrics.LaunchDirection = shot.Ball.LaunchDirection;
+                metrics.LaunchAngle = shot.Ball.VerticalLaunchAngle;
+                metrics.LaunchDirection = shot.Ball.HorizontalLaunchDirection;
                 metrics.TotalSpin = shot.Ball.TotalSpin;
                 metrics.SpinAxis = shot.Ball.SpinAxis;
 
@@ -61,8 +61,8 @@ namespace TenOver.WinForm.Example
             {
                 metrics.ClubSpeedMph = shot.Club.ClubHeadSpeed * 2.23694f;
                 metrics.AttackAngle = shot.Club.AttackAngle;
-                metrics.ClubPath = shot.Club.PathAngle;
-                metrics.FaceAngle = shot.Club.FaceAngle;
+                metrics.ClubPath = shot.Club.PathToTarget;
+                metrics.FaceAngle = shot.Club.FaceToTarget;
 
                 // Derived Club Calculations
                 metrics.FaceToPath = metrics.FaceAngle - metrics.ClubPath;

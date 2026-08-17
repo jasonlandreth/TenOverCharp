@@ -16,15 +16,26 @@ namespace TenOver.proto;
 // ── Shot data ─────────────────────────────────────────────────────────────────
 
 /// <summary>Decoded shot data from the R10.</summary>
-public sealed class ShotData
+public class ShotData
 {
-  public uint ShotId { get; init; }
-  public ShotType ShotType { get; init; }
-  public BallData? Ball { get; init; }
-  public ClubData? Club { get; init; }
-  public SwingData? Swing { get; init; }
+    /// <summary>
+    /// Unique identifier for the shot. This is a monotonically increasing value that increments with each shot taken.
+    /// </summary>
+    public uint ShotId { get; init; }
+    /// <summary>
+    /// Type of shot taken (e.g., full swing, chip, putt, etc.).
+    /// </summary>
+    public ShotType ShotType { get; init; }
+    /// <summary>
+    /// Data about the ball's trajectory and performance.
+    /// </summary>
+    public BallData? Ball { get; init; }
+    /// <summary>
+    /// Data about the club used for the shot.
+    /// </summary>
+    public ClubData? Club { get; init; }
+    /// <summary>
+    /// Data about the swing mechanics.
+    /// </summary>
+    public SwingData? Swing { get; init; }
 }
-
-// ── Device state / error ──────────────────────────────────────────────────────
-
-// ── Smart events ──────────────────────────────────────────────────────────────

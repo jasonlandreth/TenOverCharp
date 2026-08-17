@@ -16,12 +16,36 @@ namespace TenOver.proto;
 /// <summary>Club head metrics at impact.</summary>
 public sealed class ClubData
 {
-    /// <summary>Club head velocity at impact (m/s).</summary>
+    /// <summary>
+    /// Club head velocity at impact (mph).
+    /// </summary>
     public float ClubHeadSpeed { get; init; }
-    /// <summary>Face angle at impact (degrees).</summary>
-    public float FaceAngle { get; init; }
-    /// <summary>Club path angle (degrees).</summary>
-    public float PathAngle { get; init; }
-    /// <summary>Angle of attack (degrees).</summary>
+    /// <summary>
+    /// Face angle at impact (degrees).
+    /// </summary>
+    public float FaceToTarget { get; init; }
+    /// <summary>
+    /// Club path angle (degrees).
+    /// </summary>
+    public float PathToTarget { get; init; }
+    /// <summary>
+    /// Angle of attack (degrees).
+    /// </summary>
     public float AttackAngle { get; init; }
+    /// <summary>
+    /// Speed of the club head at impact (mph). This is equivalent to ClubHeadSpeed.
+    /// </summary>
+    public float SpeedAtImpact => ClubHeadSpeed; // mph
+ 
+    /// <summary>
+    /// The difference between the face angle and the path angle (degrees).
+    /// </summary>
+    public double FaceToPath => FaceToTarget - PathToTarget;
+    /// <summary>
+    /// The rate at which the club head is closing or opening at impact (degrees per second).
+    /// </summary>
+    public float ClosureRate(BallData ball, SwingData swing)
+    {
+        return GarminR10Calculations.EstimateClosureRate(this, ball, swing);
+    }
 }

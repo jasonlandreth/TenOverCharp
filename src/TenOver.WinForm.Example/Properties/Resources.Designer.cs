@@ -73,6 +73,16 @@ namespace TenOver.WinForm.Example.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap driving_range_side_view {
+            get {
+                object obj = ResourceManager.GetObject("driving_range_side_view", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap driving_range_with_side_lines_with_no_numbers {
             get {
                 object obj = ResourceManager.GetObject("driving-range-with-side-lines-with-no-numbers", resourceCulture);
@@ -86,6 +96,16 @@ namespace TenOver.WinForm.Example.Properties {
         internal static System.Drawing.Bitmap driving_range_with_side_lines_with_numbers {
             get {
                 object obj = ResourceManager.GetObject("driving-range-with-side-lines-with-numbers", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wide_angle_driving_range_no_lines {
+            get {
+                object obj = ResourceManager.GetObject("wide_angle_driving_range_no_lines", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

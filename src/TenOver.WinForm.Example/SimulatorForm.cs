@@ -59,6 +59,30 @@ namespace TenOver.WinForm.Example
         /// <param name="e">Event arguments.</param>
         private void btnConnect_ButtonClick(object sender, EventArgs e)
         {
+            ShotData shotData = new ShotData
+            {
+                ShotId = 1,
+                ShotType = ShotType.Normal,
+                Ball = new BallData
+                {
+                    BallSpeed = 70.0f, // m/s
+                    TotalSpin = 3000.0f, // RPM
+                    VerticalLaunchAngle = 12.0f, // degrees
+                    HorizontalLaunchDirection = 0.0f, // degrees
+                    SpinAxis = 5.0f // degrees
+                },
+                Club = new ClubData
+                {
+                    ClubHeadSpeed = 90.0f, // m/s
+                    FaceToTarget = 2.0f, // degrees
+                    PathToTarget = -1.0f // degrees
+                },
+                Swing = new SwingData
+                {
+                   // SwingTempo = 3.0f, // seconds
+                   // SwingPlaneAngle = 45.0f // degrees
+                }
+            };
             // Run BLE bluetooth background thread without blocking the UI loop
             Task.Run(() => ConnectToGarminR10());
         }
@@ -92,7 +116,7 @@ namespace TenOver.WinForm.Example
 
             string metrics = $"[Garmin R10 Event Handled - Shot ID: {shot.ShotId}]\n" +
                              $"Ball Speed: {shot.Ball.BallSpeed:F1} m/s ({speedMph:F0} MPH) | Total Spin: {shot.Ball.TotalSpin:F0} RPM\n" +
-                             $"Launch Angle: {shot.Ball.LaunchAngle:F1}° | True Spin Axis: {shot.Ball.SpinAxis:F1}°\n" +
+                             $"Launch Angle: {shot.Ball.VerticalLaunchAngle:F1}° | True Spin Axis: {shot.Ball.SpinAxis:F1}°\n" +
                              $"---------------------------------------------------------------------------------\n" +
                              $"Carry Distance : {currentShot.CarryYards:F1} yds\n" +
                              $"Rollout Distance: {currentShot.RolloutYards:F1} yds\n" +
@@ -114,19 +138,25 @@ namespace TenOver.WinForm.Example
             float smashFactor = clubSpeedMph > 0 ? ballSpeedMph / clubSpeedMph : 0f;
             if (shot.Club != null)
             {
-                float faceToPath = shot.Club.FaceAngle - shot.Club.PathAngle; // degrees
+                float faceToPath = shot.Club.FaceToTarget - shot.Club.PathToTarget; // degrees
 
                 log.Debug($"Calculated Metrics: FaceToPath={faceToPath:F2}°, ClubSpeed={clubSpeedMph:F1} MPH, BallSpeed={ballSpeedMph:F1} MPH, SmashFactor={smashFactor:F2}");
                 // 4. Update each Metric Tile using OnValueUpdated with MetricValueEventArgs
                 tileFaceToPath.OnValueUpdated(this, new MetricValueEventArgs($"{faceToPath:F2}"));
             }
-            log.Debug($"speedMph={speedMph}, launchAngleDeg={shot.Ball.LaunchAngle}, launchDirectionDeg={shot.Ball.LaunchDirection}, totalSpinRpm={shot.Ball.TotalSpin}");
+            var awesome =MetricCalculator.ProcessGarminShotToAwesomeMetrics(shot, currentShot);
+            log.Debug($"speedMph={speedMph}, launchAngleDeg={shot.Ball.VerticalLaunchAngle}, launchDirectionDeg={shot.Ball.HorizontalLaunchDirection}, totalSpinRpm={shot.Ball.TotalSpin}");
             tileClubSpeed.OnValueUpdated(this, new MetricValueEventArgs($"{ballSpeedMph:F1}"));
             tileBallSpeed.OnValueUpdated(this, new MetricValueEventArgs($"{ballSpeedMph:F1}"));
             tileSmashFactor.OnValueUpdated(this, new MetricValueEventArgs($"{smashFactor:F2}"));
             tileCarry.OnValueUpdated(this, new MetricValueEventArgs($"{currentShot.CarryYards:F1}"));
-            tileTotalYards.OnValueUpdated(this, new MetricValueEventArgs($"{currentShot.TotalYards:F1}"));
-
+            tileTotalYards.OnValueUpdated(this, new MetricValueEventArgs($"{currentShot.TotalYards:F1}")); 
+            tileBackSpin.OnValueUpdated(this, new MetricValueEventArgs($"{awesome.BackSpin:F1}"));
+            tileOfflineYds.OnValueUpdated(this, new MetricValueEventArgs($"{awesome.OfflineYards:F1}"));
+            tileApex.OnValueUpdated(this, new MetricValueEventArgs($"{awesome.ApexHeightFeet:F1}"));
+            tileLaunchAnlge.OnValueUpdated(this, new MetricValueEventArgs($"{awesome.LaunchAngle:F2}"));
+            tileSpinAxis.OnValueUpdated(this, new MetricValueEventArgs($"{awesome.SpinAxis:F1}"));
+            tileSideSpin.OnValueUpdated(this, new MetricValueEventArgs($"{awesome.SideSpin:F1}"));
             // 3. Kick off async rendering loop
             await AnimateGarminShotAsync();
         }
@@ -395,6 +425,11 @@ namespace TenOver.WinForm.Example
             {
                 lblStatus.BackColor = backColor.Value;
             }
+        }
+
+        private void metricTileControl2_Load(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

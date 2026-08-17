@@ -171,8 +171,8 @@ namespace TenOver.WinForm.Example
 
             // 1. Convert Garmin metric inputs (m/s to mph)
             float speedMph = shot.Ball.BallSpeed * 2.23694f;
-            float launchAngleDeg = shot.Ball.LaunchAngle;
-            float launchDirectionDeg = shot.Ball.LaunchDirection;
+            float launchAngleDeg = shot.Ball.VerticalLaunchAngle;
+            float launchDirectionDeg = shot.Ball.HorizontalLaunchDirection;
             float totalSpinRpm = shot.Ball.TotalSpin;
             float spinAxisDeg = shot.Ball.SpinAxis;
 

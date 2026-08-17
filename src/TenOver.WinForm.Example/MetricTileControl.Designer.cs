@@ -31,7 +31,6 @@
             lblTitle = new Label();
             lblValue = new Label();
             lblUnit = new Label();
-            lblTolerance = new Label();
             SuspendLayout();
             // 
             // lblTitle
@@ -42,7 +41,7 @@
             lblTitle.Location = new Point(1, 1);
             lblTitle.Name = "lblTitle";
             lblTitle.Padding = new Padding(10, 8, 0, 0);
-            lblTitle.Size = new Size(148, 24);
+            lblTitle.Size = new Size(148, 40);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "TITLE";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -52,9 +51,9 @@
             lblValue.Dock = DockStyle.Fill;
             lblValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblValue.ForeColor = Color.White;
-            lblValue.Location = new Point(1, 25);
+            lblValue.Location = new Point(1, 41);
             lblValue.Name = "lblValue";
-            lblValue.Size = new Size(148, 38);
+            lblValue.Size = new Size(148, 42);
             lblValue.TabIndex = 1;
             lblValue.Text = "- - -";
             lblValue.TextAlign = ContentAlignment.MiddleCenter;
@@ -72,26 +71,12 @@
             lblUnit.Text = "unit";
             lblUnit.TextAlign = ContentAlignment.BottomLeft;
             // 
-            // lblTolerance
-            // 
-            lblTolerance.Dock = DockStyle.Bottom;
-            lblTolerance.Font = new Font("Segoe UI", 7.5F);
-            lblTolerance.ForeColor = Color.FromArgb(90, 90, 96);
-            lblTolerance.Location = new Point(1, 63);
-            lblTolerance.Name = "lblTolerance";
-            lblTolerance.Padding = new Padding(0, 0, 10, 6);
-            lblTolerance.Size = new Size(148, 20);
-            lblTolerance.TabIndex = 3;
-            lblTolerance.Text = "±---";
-            lblTolerance.TextAlign = ContentAlignment.BottomRight;
-            // 
             // MetricTileControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(28, 28, 32);
             Controls.Add(lblValue);
-            Controls.Add(lblTolerance);
             Controls.Add(lblUnit);
             Controls.Add(lblTitle);
             Margin = new Padding(1);
@@ -107,6 +92,5 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblValue;
         private System.Windows.Forms.Label lblUnit;
-        private System.Windows.Forms.Label lblTolerance;
     }
 }

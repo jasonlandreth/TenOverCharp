@@ -108,17 +108,17 @@ using (transport)
             {
               log.Info(
                   $"  Ball: {b.BallSpeed * MsToMph,6:F1} mph  " +
-                  $"LA {b.LaunchAngle,5:F1}°  Dir {b.LaunchDirection,5:F1}°");
+                  $"LA {b.VerticalLaunchAngle,5:F1}°  Dir {b.HorizontalLaunchDirection,5:F1}°");
               log.Info(
                   $"  Spin: {b.TotalSpin,6:F0} RPM  axis {b.SpinAxis,5:F1}°  " +
-                  $"(back {b.Backspin,6:F0}, side {b.Sidespin,5:F0})  [{b.SpinCalcType}]");
+                  $"(back {b.Backspin,6:F0}, side {b.SideSpin,5:F0})  [{b.SpinCalcType}]");
             }
 
             if (s.Data.Club is { } c)
             {
               Console.WriteLine(
                   $"  Club: {c.ClubHeadSpeed * MsToMph,6:F1} mph  " +
-                  $"face {c.FaceAngle,5:F1}°  path {c.PathAngle,5:F1}°  AoA {c.AttackAngle,5:F1}°");
+                  $"face {c.FaceToTarget,5:F1}°  path {c.PathToTarget,5:F1}°  AoA {c.AttackAngle,5:F1}°");
             }
 
             if (s.Data.Swing is { } sw)

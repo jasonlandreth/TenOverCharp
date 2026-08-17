@@ -157,7 +157,7 @@ message BallMetrics {
   }
   optional float               launch_angle          = 1;  // degrees
   optional float               launch_direction      = 2;  // degrees
-  optional float               ball_speed            = 3;  // m/s
+  optional float               ball_speed            = 3;  // meters per second
   optional float               spin_axis             = 4;  // degrees
   optional float               total_spin            = 5;  // RPM
   optional SpinCalculationType spin_calculation_type = 6;
@@ -165,7 +165,7 @@ message BallMetrics {
 }
 
 message ClubMetrics {
-  optional float club_head_speed = 1;  // m/s
+  optional float club_head_speed = 1;  // meters per second
   optional float club_angle_face = 2;  // degrees
   optional float club_angle_path = 3;  // degrees
   optional float attack_angle    = 4;  // degrees

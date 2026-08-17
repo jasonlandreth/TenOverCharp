@@ -100,7 +100,7 @@ namespace TenOver.WinForm.Example
 
             string metrics = $"[Garmin R10 Event Handled - Shot ID: {shot.ShotId}]\n" +
                              $"Ball Speed: {shot.Ball.BallSpeed:F1} m/s ({speedMph:F0} MPH) | Total Spin: {shot.Ball.TotalSpin:F0} RPM\n" +
-                             $"Launch Angle: {shot.Ball.LaunchAngle:F1}° | True Spin Axis: {shot.Ball.SpinAxis:F1}°\n" +
+                             $"Launch Angle: {shot.Ball.VerticalLaunchAngle:F1}° | True Spin Axis: {shot.Ball.SpinAxis:F1}°\n" +
                              $"---------------------------------------------------------------------------------\n" +
                              $"Carry Distance : {currentShot.CarryYards:F1} yds\n" +
                              $"Rollout Distance: {currentShot.RolloutYards:F1} yds\n" +
@@ -113,7 +113,7 @@ namespace TenOver.WinForm.Example
             float ballSpeedMph = shot.Ball.BallSpeed * 2.23694f; // m/s to MPH
             float clubSpeedMph = shot.Club != null ? shot.Club.ClubHeadSpeed * 2.23694f : 0f;
             float smashFactor = clubSpeedMph > 0 ? ballSpeedMph / clubSpeedMph : 0f;
-            float faceToPath = shot.Club.FaceAngle - shot.Club.PathAngle; // degrees
+            float faceToPath = shot.Club.FaceToTarget - shot.Club.PathToTarget; // degrees
             // 4. Update each Metric Tile using the new UpdateValue wrapper which
             // ensures UI-thread marshalling. Use correct metric values (club vs ball).
             Debug.WriteLine($"Calculated Metrics: FaceToPath={faceToPath:F2}°, ClubSpeed={clubSpeedMph:F1} MPH, BallSpeed={ballSpeedMph:F1} MPH, SmashFactor={smashFactor:F2}");
@@ -455,6 +455,11 @@ namespace TenOver.WinForm.Example
             {
                 lblStatus.BackColor = backColor.Value;
             }
+        }
+
+        private void drivingRangeGridControl1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
